@@ -45,7 +45,7 @@ export default function Login() {
                     <div className="w-full max-w-sm space-y-10">
                         <div>
                             <Image src={avatarImage} alt="" sizes={'4rem'} className={'mx-auto h-10 w-auto'} priority />
-                            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
                                 Sign in to your account
                             </h2>
                         </div>
@@ -61,7 +61,7 @@ export default function Login() {
                                         type="email"
                                         autoComplete="email"
                                         required
-                                        className="relative block w-full rounded-md border-0 px-1 py-1.5 text-gray-900 ring-1 ring-inset ring-black placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        className="relative block w-full rounded-md border-0 px-1 py-1.5 text-gray-900 ring-1 ring-inset ring-black placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-zinc-600 sm:text-sm sm:leading-6"
                                         placeholder="Email"
                                         value={form.email}
                                         onChange={onChange}
@@ -79,7 +79,7 @@ export default function Login() {
                                         type="password"
                                         autoComplete="current-password"
                                         required
-                                        className="relative mt-4 block w-full rounded-md border-0 px-1 py-1.5 text-gray-900 ring-1 ring-inset ring-black placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        className="relative mt-4 block w-full rounded-md border-0 px-1 py-1.5 text-gray-900 ring-1 ring-inset ring-black placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-zinc-600 sm:text-sm sm:leading-6"
                                         placeholder="Password"
                                         value={form.password}
                                         onChange={onChange}
@@ -93,9 +93,12 @@ export default function Login() {
                                         id="remember-me"
                                         name="remember-me"
                                         type="checkbox"
-                                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                        className="h-4 w-4 rounded border-gray-300 text-zinc-600 focus:ring-zinc-600"
                                     />
-                                    <label htmlFor="remember-me" className="ml-3 block text-sm leading-6 text-gray-900">
+                                    <label
+                                        htmlFor="remember-me"
+                                        className="ml-3 block text-sm leading-6 text-gray-900 dark:text-white"
+                                    >
                                         Remember me
                                     </label>
                                 </div>
@@ -104,7 +107,7 @@ export default function Login() {
                             <div>
                                 <button
                                     type="submit"
-                                    className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                    className="flex w-full justify-center rounded-md bg-zinc-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white hover:bg-zinc-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-600"
                                 >
                                     Sign in
                                 </button>
@@ -112,7 +115,7 @@ export default function Login() {
                         </form>
 
                         <p className="text-center text-sm leading-6 text-gray-500">
-                            <Link href="/" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                            <Link href="/" className="font-semibold text-zinc-600 hover:text-zinc-500">
                                 Go to home
                             </Link>
                         </p>
