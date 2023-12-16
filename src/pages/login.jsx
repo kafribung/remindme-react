@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { Button } from '@/components/Button';
 
 export default function Login() {
     // Hook
@@ -25,12 +26,12 @@ export default function Login() {
         password: '',
     });
 
-    const onChange = (e) => {
+    const handleOnChange = (e) => {
         const { name, value } = e.target;
         setForm((prevForm) => ({ ...prevForm, [name]: value }));
     };
 
-    const submit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         login(form);
     };
@@ -49,7 +50,7 @@ export default function Login() {
                                 Sign in to your account
                             </h2>
                         </div>
-                        <form className="space-y-6" onSubmit={submit}>
+                        <form className="space-y-6" onSubmit={handleSubmit}>
                             <div className="relative -space-y-px rounded-md shadow-sm">
                                 <div>
                                     <label htmlFor="email-address" className="sr-only">
@@ -64,7 +65,7 @@ export default function Login() {
                                         className="relative block w-full rounded-md border-0 px-1 py-1.5 text-gray-900 ring-1 ring-inset ring-black placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-zinc-600 sm:text-sm sm:leading-6"
                                         placeholder="Email"
                                         value={form.email}
-                                        onChange={onChange}
+                                        onChange={handleOnChange}
                                     />
                                     {error && <p className="text-sm text-red-600">{error}</p>}
                                 </div>
@@ -82,7 +83,7 @@ export default function Login() {
                                         className="relative mt-4 block w-full rounded-md border-0 px-1 py-1.5 text-gray-900 ring-1 ring-inset ring-black placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-zinc-600 sm:text-sm sm:leading-6"
                                         placeholder="Password"
                                         value={form.password}
-                                        onChange={onChange}
+                                        onChange={handleOnChange}
                                     />
                                 </div>
                             </div>
@@ -105,12 +106,9 @@ export default function Login() {
                             </div>
 
                             <div>
-                                <button
-                                    type="submit"
-                                    className="flex w-full justify-center rounded-md bg-zinc-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white hover:bg-zinc-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-600"
-                                >
+                                <Button type="submit" className="flex w-full">
                                     Sign in
-                                </button>
+                                </Button>
                             </div>
                         </form>
 
