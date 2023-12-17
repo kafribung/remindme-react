@@ -126,6 +126,9 @@ export default function ReminderShow() {
                         <Tool className="text-xs" title={reminder.remind_at}>
                             Author: {reminder.user}
                         </Tool>
+                        <Tool className="text-xs" title="Status">
+                            Sent: {reminder.sent_email ? 'Yes' : 'No'}
+                        </Tool>
                         <Button href={`/reminder/${reminder.id}/edit`} className="m-2">
                             Edit
                         </Button>
