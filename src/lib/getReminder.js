@@ -52,7 +52,18 @@ export const updateReminder = async (form, id) => {
 
         const response = await getAxios.patch(`/reminders/${id}`, { ...form, remind_at: epochPublishDate })
         return response.data
+    } catch (error) { }
+}
+
+// Delete
+export const deleteReminder = async (id) => {
+    try {
+        // Passing token to headers
+        getAxios.defaults.headers.Authorization = `Bearer ${access_token}`;
+
+        const response = await getAxios.delete(`/reminders/${id}`)
+        return response.data
     } catch (error) {
-        return error
+        console.log(error);
     }
 }

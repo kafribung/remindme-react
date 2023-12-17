@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/Button';
-import { getReminder, storeReminders } from '@/lib/getReminder';
+import { getReminder, updateReminder } from '@/lib/getReminder';
 
 export default function ReminderEdit() {
     // Hook
@@ -53,7 +53,7 @@ export default function ReminderEdit() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // State reminders
-        const response = await storeReminders(form);
+        const response = await updateReminder(form, id);
 
         if (response.response?.data.errors) setErrors(response.response.data.errors);
         else {
@@ -64,12 +64,12 @@ export default function ReminderEdit() {
             });
             // Flash message
             localStorage.setItem('successMessage', 'Reminder updated successfully!');
-            router.push('/');
+            router.push(`/reminder/${id}`);
         }
         // End State reminders
     };
-
     // End form
+
     return (
         <>
             <Head>
