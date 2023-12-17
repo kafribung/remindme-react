@@ -60,8 +60,8 @@ export default function Index() {
             </Head>
 
             <SimpleLayout
-                title="Things I’ve made trying to put my dent in the universe."
-                intro="I’ve worked on tons of little projects over the years but these are the ones that I’m most proud of. Many of them are open-source, so if you see something that piques your interest, check out the code and contribute if you have ideas for how it can be improved."
+                title="RemindMe is an intuitive and useful application designed to help users organize and remember events and tasks in everyday life."
+                intro="With the ability to set reminders at specific times, this app ensures that no important moment is missed. RemindMe allows users to take notes, plan meetings, and organize schedules easily, providing an efficient and effective user experience"
             >
                 {flashMessage && <Alert type="success" message={flashMessage} />}
 
