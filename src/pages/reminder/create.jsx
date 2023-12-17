@@ -1,21 +1,17 @@
 import { SimpleLayout } from '@/components/SimpleLayout';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import getAxios from '@/lib/getAxios';
-import { useCookies } from 'react-cookie';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/Button';
+import { storeReminders } from '@/lib/getReminder';
 
 export default function ReminderCreate() {
     // Hook
-    const { loading, user } = useAuth();
+    const { user, loading } = useAuth();
 
     // Router
     const router = useRouter();
-
-    // Cookies
-    const [cookies] = useCookies(['access_token']);
 
     // Var local
     const [form, setForm] = useState({
@@ -44,38 +40,28 @@ export default function ReminderCreate() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const access_token = cookies.access_token;
-        if (access_token) {
-            // Convert remind_at dateTime to epoch
-            const epochPublishDate = Date.parse(`${form.remind_at}T00:00:00`) / 1000;
+        // State reminders
+        const response = await storeReminders(form);
 
-            // Passing token to headers
-            getAxios.defaults.headers.Authorization = `Bearer ${access_token}`;
-
-            // Reminder Create
-            await getAxios
-                .post('/reminders', { ...form, remind_at: epochPublishDate })
-                .then(() => {
-                    setForm({
-                        title: '',
-                        description: '',
-                        remind_at: '',
-                    }),
-                        // Flash message
-                        localStorage.setItem('successMessage', 'Reminder created successfully!'),
-                        router.push('/');
-                })
-                .catch((error) => {
-                    setErrors(error.response.data.errors);
-                });
-            // End Reminder Create
+        if (response.response?.data.errors) setErrors(response.response.data.errors);
+        else {
+            setForm({
+                title: '',
+                escription: '',
+                remind_at: '',
+            });
+            // Flash message
+            localStorage.setItem('successMessage', 'Reminder created successfully!');
+            router.push('/');
         }
+        // End State reminders
     };
+
     // End form
     return (
         <>
             <Head>
-                <title>Remindme</title>
+                <title>Remindme-Create</title>
                 <meta name="description" content="Things I’ve made trying to put my dent in the universe." />
             </Head>
             <SimpleLayout

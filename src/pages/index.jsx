@@ -11,6 +11,9 @@ import logoOpenShuttle from '@/images/logos/open-shuttle.svg';
 import logoPlanetaria from '@/images/logos/planetaria.svg';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/Button';
+import { useAuth } from '@/hooks/useAuth';
+import LoadingCard from '@/components/LoadingCard';
+import { getReminders } from '@/lib/getReminder';
 
 const projects = [
     {
@@ -57,8 +60,13 @@ function LinkIcon(props) {
 }
 
 export default function Index() {
+    // Hook
+    const { user, loading } = useAuth();
+
     // Var local
     const [flashMessage, setFlashMessage] = useState('');
+    const [limit, setLimit] = useState(10);
+    const [reminders, setReminders] = useState([]);
 
     useEffect(() => {
         // Get success_message from local_storage
@@ -71,7 +79,15 @@ export default function Index() {
 
         // Remove success_message from local_storage
         localStorage.removeItem('successMessage');
-    }, []);
+
+        const fetchDataReminders = async () => {
+            try {
+                const data = await getReminders(limit);
+                setReminders(data);
+            } catch (error) {}
+        };
+        fetchDataReminders();
+    }, [limit]);
 
     return (
         <>
@@ -86,27 +102,39 @@ export default function Index() {
             >
                 {flashMessage && <Alert type="success" message={flashMessage} />}
 
-                <Button href={'/reminder-create'} className="mb-14 justify-self-end">
-                    Add Reminder
-                </Button>
+                {loading && <LoadingCard />}
 
-                <ul role="list" className="grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
-                    {projects.map((project) => (
-                        <Card as="li" key={project.name}>
-                            <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
-                                <Image src={project.logo} alt="" className="h-8 w-8" unoptimized />
-                            </div>
-                            <h2 className="mt-6 text-base font-semibold text-zinc-800 dark:text-zinc-100">
-                                <Card.Link href={project.link.href}>{project.name}</Card.Link>
-                            </h2>
-                            <Card.Description>{project.description}</Card.Description>
-                            <p className="relative z-10 mt-6 flex text-sm font-medium text-zinc-400 transition group-hover:text-teal-500 dark:text-zinc-200">
-                                <LinkIcon className="h-6 w-6 flex-none" />
-                                <span className="ml-2">{project.link.label}</span>
-                            </p>
-                        </Card>
-                    ))}
-                </ul>
+                {!loading && user && (
+                    <>
+                        <Button href="/reminder/create" className="mb-10">
+                            Add Reminder
+                        </Button>
+
+                        <ul
+                            role="list"
+                            className="grid animate-pulse grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3"
+                        >
+                            {reminders.map((reminder, index) => (
+                                <Card as="li" key={index}>
+                                    <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+                                        <Image src={logoPlanetaria} alt="" className="h-8 w-8" unoptimized />
+                                    </div>
+                                    <Card.Cta>{reminder.data.reminders.remind_at}</Card.Cta>
+                                    <h2 className="mt-6 text-base font-semibold text-zinc-800 dark:text-zinc-100">
+                                        <Card.Link href={`reminder/${reminder.data.reminders.id}`}>
+                                            {reminder.data.reminders.title}
+                                        </Card.Link>
+                                    </h2>
+                                    <Card.Description>{reminder.data.reminders.description}</Card.Description>
+                                    <p className="relative z-10 mt-6 flex text-sm font-medium text-zinc-400 transition group-hover:text-teal-500 dark:text-zinc-200">
+                                        <LinkIcon className="h-6 w-6 flex-none" />
+                                        <span className="ml-2">{reminder.data.reminders.user}</span>
+                                    </p>
+                                </Card>
+                            ))}
+                        </ul>
+                    </>
+                )}
             </SimpleLayout>
         </>
     );

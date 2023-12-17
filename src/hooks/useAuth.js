@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext, createContext } from 'react'
 import { useRouter } from 'next/router'
 import getAxios from '../lib/getAxios'
-import { useCookies } from 'react-cookie'
+import Cookies from 'js-cookie'
 
 const AuthContext = createContext()
 
@@ -11,9 +11,6 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
-    // Cookies
-    const [cookies, setCookie, removeCookie] = useCookies(['access_token']);
-
     // Router
     const router = useRouter()
 
@@ -21,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const access_token = cookies.access_token
+                const access_token = Cookies.get('access_token')
                 if (access_token) {
                     getAxios.defaults.headers.Authorization = `Bearer ${access_token}`
                     const response = await getAxios.get('/user')
@@ -44,11 +41,10 @@ export const AuthProvider = ({ children }) => {
         try {
             await csrf()
             const response = await getAxios.post('/login', credentials)
-            const { data: { access_token, refresh_token, user } } = response.data
+            const { data: { access_token, user } } = response.data
 
             if (access_token) {
-                // setCookie('refresh_token', refresh_token);
-                setCookie('access_token', access_token);
+                Cookies.set('access_token', access_token, { expires: 1 })
                 setUser(user)
                 router.push('/')
             }
@@ -60,13 +56,13 @@ export const AuthProvider = ({ children }) => {
     // Logout
     const logout = async () => {
         try {
-            const access_token = cookies.access_token
+            const access_token = Cookies.get('access_token')
             if (access_token) {
                 getAxios.defaults.headers.Authorization = `Bearer ${access_token}`
                 const response = await getAxios.post('/logout')
                 if (response) {
                     setUser(null)
-                    removeCookie('access_token')
+                    Cookies.remove('access_token', { expires: 1 })
                     router.push('/login')
                 }
             }
