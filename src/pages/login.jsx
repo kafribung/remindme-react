@@ -8,7 +8,7 @@ import { Button } from '@/components/Button';
 
 export default function Login() {
     // Hook
-    const { login, loading, user, error } = useAuth();
+    const { login, user, error } = useAuth();
 
     // Router
     const router = useRouter();
@@ -39,9 +39,7 @@ export default function Login() {
 
     return (
         <>
-            {loading && <p>Loading...</p>}
-            {!loading && user && <p>You are already logged in as {user.name}.</p>}
-            {!loading && !user && (
+            {!user && (
                 <div className="flex min-h-full flex-1 items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
                     <div className="w-full max-w-sm space-y-10">
                         <div>

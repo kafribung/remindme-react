@@ -22,7 +22,10 @@ export const AuthProvider = ({ children }) => {
                 if (access_token) {
                     getAxios.defaults.headers.Authorization = `Bearer ${access_token}`
                     const response = await getAxios.get('/user')
-                    if (response) setUser(response)
+                    if (response) {
+                        setUser(response)
+                        setError(null)
+                    }
                 }
             } catch (error) {
                 setUser(null)
@@ -63,7 +66,7 @@ export const AuthProvider = ({ children }) => {
                 if (response) {
                     setUser(null)
                     Cookies.remove('access_token', { expires: 1 })
-                    router.push('/login')
+                    router.push('/')
                 }
             }
         } catch (error) {

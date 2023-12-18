@@ -97,7 +97,7 @@ export default function ReminderShow() {
                 await deleteReminder(id);
 
                 //Set alert
-                localStorage.setItem('successMessage', 'Reminder updated successfully!');
+                localStorage.setItem('successMessage', 'Reminder deleted successfully!');
                 router.push('/');
             } catch (error) {
                 MySwal.fire({
