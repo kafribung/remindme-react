@@ -12,8 +12,9 @@ npm install
 
 Next, create a `.env.local` file in the root of your project and set the `NEXT_PUBLIC_SITE_URL` variable to your site's public URL:
 
-```
-NEXT_PUBLIC_SITE_URL=https://example.com
+```bash
+NEXT_PUBLIC_SITE_URL=http://127.0.0.1:8000/api // Manual
+NEXT_PUBLIC_SITE_URL=http://127.0.0.1/api // Sail
 ```
 
 Next, run the development server:
