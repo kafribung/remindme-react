@@ -55,7 +55,7 @@ export default function ReminderEdit() {
         // State reminders
         const response = await updateReminder(form, id);
 
-        if (response.response?.data.errors) setErrors(response.response.data.errors);
+        if (response?.errors) setErrors(response.errors);
         else {
             setForm({
                 title: '',

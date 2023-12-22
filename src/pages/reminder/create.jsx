@@ -43,7 +43,7 @@ export default function ReminderCreate() {
         // State reminders
         const response = await storeReminders(form);
 
-        if (response.response?.data.errors) setErrors(response.response.data.errors);
+        if (response?.errors) setErrors(response.errors);
         else {
             setForm({
                 title: '',

@@ -25,7 +25,9 @@ export const storeReminders = async (form) => {
 
         const response = await getAxios.post('/reminders', { ...form, remind_at: epochPublishDate })
         return response.data
-    } catch (error) { }
+    } catch (error) {
+        return error.response.data
+    }
 };
 
 // Show
@@ -51,7 +53,7 @@ export const updateReminder = async (form, id) => {
         const response = await getAxios.patch(`/reminders/${id}`, { ...form, remind_at: epochPublishDate })
         return response.data
     } catch (error) {
-        return error
+        return error.response.data
     }
 }
 
@@ -63,5 +65,7 @@ export const deleteReminder = async (id) => {
 
         const response = await getAxios.delete(`/reminders/${id}`)
         return response.data
-    } catch (error) { }
+    } catch (error) {
+        return error.response.data
+    }
 }

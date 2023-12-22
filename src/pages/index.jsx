@@ -68,19 +68,19 @@ export default function Index() {
 
                 {loading && <LoadingCard />}
 
-                <Select
-                    placeholder="Select a limit"
-                    onChange={(e) => setLimit(e.target.value)}
-                    name="limit"
-                    id="limit"
-                    options={[...Array(10)].map((_, index) => ({
-                        value: index + 1,
-                        label: `${index + 1} items`,
-                    }))}
-                />
-
                 {!loading && user && (
                     <>
+                        <Select
+                            placeholder="Select a limit"
+                            onChange={(e) => setLimit(e.target.value)}
+                            name="limit"
+                            id="limit"
+                            options={[...Array(30)].map((_, index) => ({
+                                value: index + 1,
+                                label: `${index + 1} items`,
+                            }))}
+                        />
+
                         <Button href="/reminder/create" className="mb-10 mt-5">
                             Add Reminder
                         </Button>
